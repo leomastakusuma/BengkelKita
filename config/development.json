@@ -1,0 +1,15 @@
+{
+    "CoreSys": {
+        "dbMaster": {
+            "host": "db.bengkelonline.id",
+            "port": 3306,
+            "dbName": "bengkel",
+            "user": "bengkel",
+            "pass": "8en6kelOn7!n3#"
+        },
+        "etc": {
+            "jwtExpires": 36000,
+            "jwtPayload": "BengkelKita2018#"
+        }
+    }
+}
