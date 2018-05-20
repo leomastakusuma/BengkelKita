@@ -1,7 +1,7 @@
-import abstractBengkelKita from "../../../../library/AbstractBengkelKita"
 import locationModels from "../models/Location_models"
+import abstractResponse from "../../../../library/abstractResponse";
 
-export default class Location extends abstractBengkelKita{
+export default class Location extends abstractResponse{
 	constructor(router) {
 		super()
 		this.router = router
