@@ -1,15 +1,13 @@
 import express from "express"
-
 import bodyParser from "body-parser"
-import expressValidator from "express-validator";
-
-import jsonwebtoken from "jsonwebtoken"
-import db from "./library/database"
+import expressValidator from "express-validator"
 import helmet from "helmet"
 
 
+import Location from "./module/location/v1/controllers/Locationcontrollers"
 
 let app = express()
+let apiRouter = express.Router()
 
 app.use(bodyParser.urlencoded({
 	limit: "50mb",
@@ -32,28 +30,41 @@ app.use(function (req, res, next) {
 	next()
 })
 app.use(helmet())
+
 function errorHandler(err, req, res, next) {
 	res.status(400)
-	response.error("error", "Opps something wrong with your input", function (cb) {
-		res.json(cb)
-	})
+	let Response = {
+		"status": "204",
+		"message": "error",
+		"display_message": "Opps something wrong with your input",
+		"data": {}
+
+	}
+	res.json(Response)
+	next()
 }
 app.use(errorHandler)
 
+app.use("/v1", apiRouter)
+new Location(apiRouter)
 
-import erc from 'express-route-controller'
-erc(app, {
-	controllers: __dirname + "/controllers/v1",
-	routes: {}
-})
 
-// // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+
+
+
+
+//Handling Not Found Url
+app.use(function (req, res,next) {
 	res.status(404)
-	response.error("Not Found", "Please check url", function (response) {
-		res.json(response)
-	})
-	return
+	let Response = {
+		"status": "204",
+		"message": "Not Found",
+		"display_message": "Opps Please check url",
+		"data": {}
+
+	}
+	res.json(Response)
+	next()
 })
 
 
