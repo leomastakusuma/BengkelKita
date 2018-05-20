@@ -1,0 +1,8 @@
+{
+    "apps": [{
+        "name": "BengkelKita",
+        "script": "./app.js",
+        "exec_interpreter": "babel-node",
+        "log_date_format": "YYYY/MM/DD HH:mm Z"
+    }]
+}
