@@ -4,8 +4,6 @@ import expressValidator from "express-validator"
 import helmet from "helmet"
 
 
-import Location from "./module/location/v1/controllers/Locationcontrollers"
-
 let app = express()
 let apiRouter = express.Router()
 
@@ -15,7 +13,6 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(bodyParser.json())
-
 app.use(expressValidator())
 app.use(function (req, res, next) {
 	for (var item in req.query) {
@@ -30,7 +27,6 @@ app.use(function (req, res, next) {
 	next()
 })
 app.use(helmet())
-
 function errorHandler(err, req, res, next) {
 	res.status(400)
 	let Response = {
@@ -45,12 +41,12 @@ function errorHandler(err, req, res, next) {
 }
 app.use(errorHandler)
 
+/**
+ * @description list controller
+ */
+import Location from "./module/Location/v1/controllers/Locationcontrollers"
 app.use("/v1", apiRouter)
 new Location(apiRouter)
-
-
-
-
 
 
 //Handling Not Found Url
