@@ -1,4 +1,4 @@
-export class generalResponse {
+export default class generalResponse {
 	constructor(){
 		this.result = ""
 	}
