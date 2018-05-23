@@ -57,4 +57,13 @@ export class abstractResponse {
 		}
 		callback(result)
 	}
+	responseValidation(display_message, callback) {
+		var result = {
+			status: 400,
+			message: "validation errors",
+			display_message: display_message,
+			data: {}
+		}
+		callback(result)
+	}
 }
