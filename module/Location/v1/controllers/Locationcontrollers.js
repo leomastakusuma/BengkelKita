@@ -1,6 +1,7 @@
 import locationModels from "../models/Location_models"
 import abstractBengkelKita from "../../../../library/abstractBengkelKita"
 
+
 export default class Location extends abstractBengkelKita {
 	constructor(router) {
 		super()
@@ -26,18 +27,41 @@ export default class Location extends abstractBengkelKita {
 	}
 
 	postLocation(req, res) {
-		// let errors = ""
-		if (typeof req.body != undefined) {
-			this.responseValidation("Validations Errors " + "E",  (response)=> {
-				res.json(response)
-			})
-		} else {
-			let dataResult = {
-				"Welcome": "Post Location"
+		let validation = []
+		let errors = []
+		validation.push((typeof(req.body.name)!="undefined") ? true : false)
+		validation.push((typeof(req.body.latitude)!="undefined") ? true : false)
+		validation.push((typeof(req.body.longitude)!="undefined") ? true : false)
+		validation.forEach(element=>{
+			if(element == false){
+				errors.push(false)
 			}
-			this.responseSuccess("Location has been save", dataResult, (response) => {
+		})
+	
+		if(errors.length > 0){
+			this.responseValidation("Opps please check your input data.", (response) => {
 				res.json(response)
 			})
+		}else{
+			let Params = {
+				"name": req.body.name,
+				"latitude": req.body.latitude,
+				"longitude": req.body.longitude,
+				"address" : req.body.address
+			}
+			locationModels.saveLocation(Params,(insertLocation)=>{
+				if(insertLocation.affectedRows > 0){
+					this.responseSuccess("Location has been save.", {}, (successCreateLocation) => {
+						res.json(successCreateLocation)
+					})
+				}else{
+					this.responseFailed("Failed create locations",{},(failCreadLocation)=>{
+						res.json(failCreadLocation)
+					})
+				}
+
+			})
+
 		}
 
 
