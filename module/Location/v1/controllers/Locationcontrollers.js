@@ -1,6 +1,5 @@
 import locationModels from "../models/Location_models"
 import abstractBengkelKita from "../../../../library/abstractBengkelKita"
-import { NOTFOUND } from "dns";
 
 
 export default class Location extends abstractBengkelKita {
