@@ -2,8 +2,7 @@ import telegramLogger from "telegram-logger"
 import {
 	abstractResponse
 } from "./abstractResponse"
-import mysql from "mysql"
-import config from "config"
+
 
 export default class abstractBengkelKita extends abstractResponse {
 	sendTelegram(params) {
