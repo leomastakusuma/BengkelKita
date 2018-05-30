@@ -15,7 +15,7 @@ let poolingQuery = mysql.createPool({
 })
 
 
-class abstractQuery {
+export class abstractQuery {
 	queryEscape (Query,Params, callback){
 		poolingQuery.getConnection(function(err,connection){
 			if (err) {
@@ -34,4 +34,5 @@ class abstractQuery {
 		})
 	}
 }
-module.exports = new abstractQuery()
+
+module.exports =  abstractQuery
