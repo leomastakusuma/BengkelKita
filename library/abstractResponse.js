@@ -21,11 +21,11 @@ export class abstractResponse {
 		callback(this.result)
 	}
 
-	responseNotFound(callback) {
+	responseNotFound(message,callback) {
 		this.result = {
 			status: 204,
 			message: "not found",
-			display_message: "opps data not found",
+			display_message: message,
 			data: {},
 		}
 		callback(this.result)

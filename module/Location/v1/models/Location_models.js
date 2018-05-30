@@ -1,14 +1,19 @@
-import abstractQuery from "../../../../library/abstractQuery"
-export class Location_models extends abstractQuery {
+import abstractBengkelKita from "../../../../library/abstractBengkelKita"
+export class Location_models extends abstractBengkelKita {
 	constructor(){
 		super()
 		this.sql = ""
 		this.escape = ""
 	}
-
-	getDataLocation (params,callback){
+	getLocationByID(uid,callback){
 		this.sql = "SELECT * from tbl_location where uid =?"
-		this.escape = [1]
+		this.escape = [uid]
+		this.queryEscape(this.sql,this.escape,(resultData)=>{
+			callback(resultData)
+		})
+	}
+	getAllLocation (callback){
+		this.sql = "SELECT * from tbl_location"		
 		this.queryEscape(this.sql,this.escape,(resultData)=>{
 			callback(resultData)
 		})
@@ -20,6 +25,21 @@ export class Location_models extends abstractQuery {
 			callback(resultInsert)
 		})
 	}
+	updateLocation(params,callback){
+		this.sql = "UPDATE tbl_location SET name = ?, latitude = ?,longitude=?,address=? WHERE uid = ? "
+		this.escape = []
+		this.queryEscape(this.sql,this.escape,(resultData)=>{
+			callback(resultData)
+		})
+	}
+	deleteLocation(uid,callback){
+		this.sql = "DELETE *  FROM tbl_location WHERE uid = ? "
+		this.escape = [uid]
+		this.queryEscape(this.sql,this.escape,(resultData)=>{
+			callback(resultData)
+		})
+	}
 }
+
 
 module.exports = new Location_models()

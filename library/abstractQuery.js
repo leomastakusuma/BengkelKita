@@ -13,8 +13,6 @@ let poolingQuery = mysql.createPool({
 	port: conf_core_sys.dbMaster.port,
 	debug    :  false
 })
-
-
 export class abstractQuery {
 	queryEscape (Query,Params, callback){
 		poolingQuery.getConnection(function(err,connection){
