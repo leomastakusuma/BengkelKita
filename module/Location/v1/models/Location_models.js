@@ -1,5 +1,5 @@
-import abstractBengkelKita from "../../../../library/abstractBengkelKita"
-export class Location_models extends abstractBengkelKita {
+import abstractQuery from "../../../../library/abstractQuery"
+export  class Location_models extends abstractQuery {
 	constructor(){
 		super()
 		this.sql = ""
@@ -42,4 +42,3 @@ export class Location_models extends abstractBengkelKita {
 }
 
 
-module.exports = new Location_models()

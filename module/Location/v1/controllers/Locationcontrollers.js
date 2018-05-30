@@ -1,6 +1,5 @@
-import locationModels from "../models/Location_models"
+import { Location_models } from "../models/Location_models"
 import abstractBengkelKita from "../../../../library/abstractBengkelKita"
-
 
 export default class Location extends abstractBengkelKita {
 	constructor(router) {
@@ -18,7 +17,7 @@ export default class Location extends abstractBengkelKita {
 	}
 
 	getLocation(req, res) {
-		locationModels.getAllLocation((resultData) => {
+		this.getModelLocation().getAllLocation((resultData) => {
 			this.responseSuccess("Success get location", resultData, (response) => {
 				res.json(response)
 			})
@@ -26,6 +25,11 @@ export default class Location extends abstractBengkelKita {
 
 	}
 
+	/**
+	 * @description create Location
+	 * @param {*} req 
+	 * @param {*} res 
+	 */
 	postLocation(req, res) {
 		let validation = []
 		let errors = []
@@ -49,7 +53,7 @@ export default class Location extends abstractBengkelKita {
 				"longitude": req.body.longitude,
 				"address": req.body.address
 			}
-			locationModels.saveLocation(Params, (insertLocation) => {
+			this.getModelLocation().saveLocation(Params, (insertLocation) => {
 				if (insertLocation.affectedRows > 0) {
 					this.responseSuccess("Location has been save.", {}, (successCreateLocation) => {
 						res.json(successCreateLocation)
@@ -63,10 +67,12 @@ export default class Location extends abstractBengkelKita {
 			})
 
 		}
-
-
-
 	}
+	/**
+	 * @description update Location
+	 * @param {*} req 
+	 * @param {*} res 
+	 */
 	updateLocation(req, res) {
 		let dataResult = {
 			"Welcome": "Update Location"
@@ -77,6 +83,11 @@ export default class Location extends abstractBengkelKita {
 
 	}
 
+	/**
+	 * @description delete Location ByID
+	 * @param {*} req 
+	 * @param {*} res 
+	 */
 	deleteLocation(req, res) {
 		let dataResult = {
 			"Welcome": "API BangkelKita"
@@ -87,6 +98,11 @@ export default class Location extends abstractBengkelKita {
 
 	}
 
+	/**
+	 * @description get Location ByID
+	 * @param {*} req 
+	 * @param {*} res 
+	 */
 	findByID(req, res) {
 		let validation = []
 		let errors = []
@@ -102,18 +118,26 @@ export default class Location extends abstractBengkelKita {
 				res.json(response)
 			})
 		} else {
-			locationModels.getLocationByID(req.params.uid,resultData => {
-				if(resultData.length){
+			this.getModelLocation().getLocationByID(req.params.uid, resultData => {
+				if (resultData.length) {
 					this.responseSuccess("Success get location", resultData[0], (response) => {
 						res.json(response)
 					})
-				}else{
-					this.responseNotFound("UID Location not found",NotFound=>{
+				} else {
+					this.responseNotFound("UID Location not found", NotFound => {
 						res.json(NotFound)
-					})	
+					})
 				}
 
 			})
 		}
+	}
+
+	/**
+	 * @description get Model Location
+	 */
+	getModelLocation(){
+		let locationModels = new Location_models()
+		return locationModels
 	}
 }
