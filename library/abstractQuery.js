@@ -20,24 +20,20 @@ export default class abstractQuery {
 				connection.release()
 				throw err
 			}
-			let Log = connection.query(Query, Params, function (err, results) {
+			connection.query(Query, Params, function (err, results) {
 				connection.release()
 				if (!err) {
-					new abstractBengkelKita().sendTelegram(Log.sql)
 					callback(results)
 				}
 			})
 			connection.on("error", function (err) {
-				new abstractBengkelKita().sendTelegram("Connection %d acquired", err)
-			})
-			connection.on("acquire", function (connection) {
-				new abstractBengkelKita().sendTelegram("Connection %d acquired", connection.threadId)
+				new abstractBengkelKita().sendTelegram("Error Db"+err)
 			})
 			connection.on("enqueue", function () {
 				new abstractBengkelKita().sendTelegram("Waiting for available connection slot")
 			})
 			connection.on("release", function (connection) {
-				new abstractBengkelKita().sendTelegram("Connection %d released", connection.threadId)
+				new abstractBengkelKita().sendTelegram("Connection released"+connection.threadId)
 			})
 		})
 	}
