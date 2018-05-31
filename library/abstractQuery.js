@@ -27,7 +27,7 @@ export default class abstractQuery {
 				}
 			})
 			connection.on("error", function (err) {
-				throw err
+				new abstractBengkelKita().sendTelegram("Connection %d acquired", err)
 			})
 			connection.on("acquire", function (connection) {
 				new abstractBengkelKita().sendTelegram("Connection %d acquired", connection.threadId)
