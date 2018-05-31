@@ -1,7 +1,6 @@
 import mysql from "mysql"
 import config from "config"
 import abstractBengkelKita from "../library/abstractBengkelKita"
-import dbConfg from "../dbconfig"
 
 export default class abstractQuery {
 	queryEscape(Query, Params, callback) {
@@ -40,15 +39,6 @@ export default class abstractQuery {
 			connection.on("release", function (connection) {
 				new abstractBengkelKita().sendTelegram("Connection %d released", connection.threadId)
 			})
-		})
-	}
-	queryFastEscapa(Query,escape,callback){
-		dbConfg.query(Query,escape, function(error, results){
-			if (error){
-				throw error      
-			}else{
-				callback(results)
-			}
 		})
 	}
 }
