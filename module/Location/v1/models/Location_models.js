@@ -5,6 +5,10 @@ export  class Location_models extends abstractQuery {
 		this.sql = ""
 		this.escape = ""
 	}
+	/**
+	 * @description get Location byID
+	 * @param {integer} uid 
+	 */
 	getLocationByID(uid,callback){
 		this.sql = "SELECT * from tbl_location where uid =?"
 		this.escape = [uid]

@@ -27,23 +27,22 @@ export default class Location extends abstractBengkelKita {
 
 	/**
 	 * @description create Location
-	 * @param {*} req 
-	 * @param {*} res 
+	 * @param {name,latitude,longitude} req 
 	 */
 	postLocation(req, res) {
 		let validation = []
 		let errors = []
-		validation.push((typeof (req.body.name) != "undefined") ? true : false)
-		validation.push((typeof (req.body.latitude) != "undefined") ? true : false)
-		validation.push((typeof (req.body.longitude) != "undefined") ? true : false)
+		validation.push((typeof (req.body.name) != "undefined")  ?  true : "name is required" )
+		validation.push((typeof (req.body.latitude) != "undefined") ? true : "latitude is required")
+		validation.push((typeof (req.body.longitude) != "undefined") ? true : "longitude is required")
 		validation.forEach(element => {
-			if (element == false) {
-				errors.push(false)
+			if (element != true) {
+				errors.push(element+"\n")
 			}
 		})
 
 		if (errors.length > 0) {
-			this.responseValidation("Opps please check your input data.", (response) => {
+			this.responseValidation("Validation Errors : "+errors, (response) => {
 				res.json(response)
 			})
 		} else {
@@ -100,21 +99,21 @@ export default class Location extends abstractBengkelKita {
 
 	/**
 	 * @description get Location ByID
-	 * @param {*} req 
-	 * @param {*} res 
+	 * @param {uid} req 
 	 */
 	findByID(req, res) {
 		let validation = []
 		let errors = []
-		validation.push((typeof (req.params.uid) != "undefined") ? true : false)
+
+		validation.push((isNaN(req.params.uid) != true)  ? true : "uid must be INT")
 		validation.forEach(element => {
-			if (element == false) {
-				errors.push(false)
+			if (element !=true) {
+				errors.push(element)
 			}
 		})
 
 		if (errors.length > 0) {
-			this.responseValidation("Opps please check your params data.", (response) => {
+			this.responseValidation("Validation errors : "+errors, (response) => {
 				res.json(response)
 			})
 		} else {
