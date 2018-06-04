@@ -1,6 +1,6 @@
 {
     "CoreSys": {
-        "dbMaster": {
+        "dbConfig": {
             "host": "db.bengkelonlinxe.id",
             "port": 3306,
             "dbName": "bengkel",
