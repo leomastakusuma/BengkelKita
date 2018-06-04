@@ -1,7 +1,21 @@
-import dbConfig from "./../dbConfig"
+import mysql from "mysql"
+import config from "config"
+
 export default class abstractQuery {
 	queryEscape(Query, Params, callback) {
-		dbConfig.query(Query, Params, function (err, results) {
+		let conf_core_sys = config.get("CoreSys")
+		let Connection = mysql.createPool({
+			connectionLimit: 10,
+			host: conf_core_sys.dbConfig.host,
+			user: conf_core_sys.dbConfig.user,
+			dateStrings: true,
+			password: conf_core_sys.dbConfig.pass,
+			database: conf_core_sys.dbConfig.dbName,
+			port:conf_core_sys.dbConfig.port,
+			debug: false
+		})
+
+		Connection.query(Query, Params, function (err, results) {
 			if (!err) {
 				callback(results)
 			}
