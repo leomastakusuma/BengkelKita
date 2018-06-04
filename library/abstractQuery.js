@@ -1,41 +1,37 @@
-import mysql from "mysql"
-import config from "config"
-import abstractBengkelKita from "../library/abstractBengkelKita"
+// import abstractBengkelKita from "../library/abstractBengkelKita"
+import dbConfig from "./../dbConfig"
 
 export default class abstractQuery {
 	queryEscape(Query, Params, callback) {
-		let conf_core_sys = config.get("CoreSys")
-		let poolingQuery = mysql.createPool({
-			connectionLimit: 10,
-			host: conf_core_sys.dbMaster.host,
-			user: conf_core_sys.dbMaster.user,
-			dateStrings: true,
-			password: conf_core_sys.dbMaster.pass,
-			database: conf_core_sys.dbMaster.dbName,
-			port: conf_core_sys.dbMaster.port,
-			debug: false
-		})
-		poolingQuery.getConnection(function (err, connection) {
-			if (err) {
-				connection.release()
-				throw err
+		dbConfig.query(Query, Params, function (err, results) {
+			if (!err) {
+				callback(results)
 			}
-			connection.query(Query, Params, function (err, results) {
-				connection.release()
-				if (!err) {
-					callback(results)
-				}
-			})
-			connection.on("error", function (err) {
-				new abstractBengkelKita().sendTelegram("Error Db"+err)
-			})
-			connection.on("enqueue", function () {
-				new abstractBengkelKita().sendTelegram("Waiting for available connection slot")
-			})
-			connection.on("release", function (connection) {
-				new abstractBengkelKita().sendTelegram("Connection released"+connection.threadId)
-			})
 		})
+
+
+
+		// poolingQuery.getConnection(function (err, connection) {
+		// 	if (err) {
+		// 		console.log(err)
+		// 		throw err
+		// 	}
+		// 	connection.query(Query, Params, function (err, results) {
+		// 		connection.release()
+		// 		if (!err) {
+		// 			callback(results)
+		// 		}
+		// 	})
+		// 	connection.on("error", function (err) {
+		// 		new abstractBengkelKita().sendTelegram("Error Db"+err)
+		// 	})
+		// 	connection.on("enqueue", function () {
+		// 		new abstractBengkelKita().sendTelegram("Waiting for available connection slot")
+		// 	})
+		// 	connection.on("release", function (connection) {
+		// 		new abstractBengkelKita().sendTelegram("Connection released"+connection.threadId)
+		// 	})
+		// })
 	}
 }
 

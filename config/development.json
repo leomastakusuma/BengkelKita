@@ -1,7 +1,7 @@
 {
     "CoreSys": {
         "dbMaster": {
-            "host": "db.bengkelonline.id",
+            "host": "db.bengkelonlinxe.id",
             "port": 3306,
             "dbName": "bengkel",
             "user": "bengkel",
