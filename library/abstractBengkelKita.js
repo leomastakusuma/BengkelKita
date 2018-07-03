@@ -10,7 +10,7 @@ export default class abstractBengkelKita extends abstractResponse {
 			token: "518528266:AAFc9e2jhvPkaAsd1QbasV7NsLONTesoyhk",
 			chat_id: "-207890427",
 		})
-		logger(params)
+		//logger(params)
 	}
 
 }
