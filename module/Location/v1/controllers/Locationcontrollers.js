@@ -119,12 +119,33 @@ export default class Location extends abstractBengkelKita {
 	 * @param {*} res 
 	 */
 	deleteLocation(req, res) {
-		let dataResult = {
-			"Welcome": "API BangkelKita"
-		}
-		this.responseSuccess("Testing", dataResult, (response) => {
-			res.json(response)
+		let validation = []
+		let errors = []
+		validation.push((typeof (req.params.uid) != "undefined") ? true : "uid is required")
+		validation.forEach(element => {
+			if (element != true) {
+				errors.push(element+"\n")
+			}
 		})
+
+		if (errors.length > 0) {
+			this.responseValidation("Validation Errors : "+errors, (response) => {
+				res.json(response)
+			})
+		} else {
+			this.getModelLocation().deleteLocation(req.params.uid,(resultUpdate)=>{
+				if(resultUpdate.affectedRows > 0){
+					this.responseSuccess("Location has been delete", {}, (response) => {
+						res.json(response)
+					})
+				}else{
+					this.responseFailUpdate((response) => {
+						res.json(response)
+					})
+				}
+
+			})
+		}
 
 	}
 

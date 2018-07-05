@@ -10,14 +10,15 @@ export  class Location_models extends abstractQuery {
 	 * @param {integer} uid 
 	 */
 	getLocationByID(uid,callback){
-		this.sql = "SELECT * from tbl_location where uid =?"
-		this.escape = [uid]
+		this.sql = "SELECT * from tbl_location where uid =? and is_delete != ?"
+		this.escape = [uid,1]
 		this.queryEscape(this.sql,this.escape,(resultData)=>{
 			callback(resultData)
 		})
 	}
 	getAllLocation (callback){
-		this.sql = "SELECT * from tbl_location"		
+		this.sql = "SELECT * from tbl_location where is_delete = ? "
+		this.escape = [1]		
 		this.queryEscape(this.sql,this.escape,(resultData)=>{
 			callback(resultData)
 		})
@@ -37,8 +38,8 @@ export  class Location_models extends abstractQuery {
 		})
 	}
 	deleteLocation(uid,callback){
-		this.sql = "DELETE *  FROM tbl_location WHERE uid = ? "
-		this.escape = [uid]
+		this.sql = "UPDATE tbl_location SET is_delete = ? WHERE uid = ? "
+		this.escape = [1,uid]
 		this.queryEscape(this.sql,this.escape,(resultData)=>{
 			callback(resultData)
 		})
