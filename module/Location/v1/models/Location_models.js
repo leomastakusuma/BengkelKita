@@ -31,7 +31,7 @@ export  class Location_models extends abstractQuery {
 	}
 	updateLocation(params,callback){
 		this.sql = "UPDATE tbl_location SET name = ?, latitude = ?,longitude=?,address=? WHERE uid = ? "
-		this.escape = []
+		this.escape = [params.name, params.latitude,params.longitude, params.address,params.uid]
 		this.queryEscape(this.sql,this.escape,(resultData)=>{
 			callback(resultData)
 		})

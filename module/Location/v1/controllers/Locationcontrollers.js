@@ -73,12 +73,43 @@ export default class Location extends abstractBengkelKita {
 	 * @param {*} res 
 	 */
 	updateLocation(req, res) {
-		let dataResult = {
-			"Welcome": "Update Location"
-		}
-		this.responseSuccess("Location has been update", dataResult, (response) => {
-			res.json(response)
+		let validation = []
+		let errors = []
+		validation.push((typeof (req.body.name) != "undefined")  ?  true : "name is required" )
+		validation.push((typeof (req.body.latitude) != "undefined") ? true : "latitude is required")
+		validation.push((typeof (req.body.longitude) != "undefined") ? true : "longitude is required")
+		validation.forEach(element => {
+			if (element != true) {
+				errors.push(element+"\n")
+			}
 		})
+
+		if (errors.length > 0) {
+			this.responseValidation("Validation Errors : "+errors, (response) => {
+				res.json(response)
+			})
+		} else {
+			let params = {
+				"name": req.body.name,
+				"latitude": req.body.latitude,
+				"longitude": req.body.longitude,
+				"address": req.body.address,
+				"uid" : req.params.uid
+			}
+
+			this.getModelLocation().updateLocation(params,(resultUpdate)=>{
+				if(resultUpdate.affectedRows > 0){
+					this.responseSuccess("Location has been update", {}, (response) => {
+						res.json(response)
+					})
+				}else{
+					this.responseFailUpdate((response) => {
+						res.json(response)
+					})
+				}
+
+			})
+		}
 
 	}
 

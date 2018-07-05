@@ -1,5 +1,6 @@
 import mysql from "mysql"
 import config from "config"
+import { error } from "util";
 
 export default class abstractQuery {
 	queryEscape(Query, Params, callback) {
@@ -15,7 +16,10 @@ export default class abstractQuery {
 			debug: false
 		})
 
-		Connection.query(Query, Params, function (err, results) {
+		let Log = Connection.query(Query, Params, function (err, results) {
+			if(conf_core_sys.etc.log){
+				console.log(Log.sql)
+			}
 			if (!err) {
 				callback(results)
 			}

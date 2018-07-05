@@ -21,6 +21,16 @@ export class abstractResponse {
 		callback(this.result)
 	}
 
+	responseFailUpdate(callback) {
+		this.result = {
+			status: 404,
+			status_message: "Internal server error",
+			display_message: "Fail update data",
+			data: {},
+		}
+		callback(this.result)
+	}
+
 	responseNotFound(message,callback) {
 		this.result = {
 			status: 204,

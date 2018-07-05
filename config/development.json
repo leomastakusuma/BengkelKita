@@ -1,7 +1,7 @@
 {
     "CoreSys": {
         "dbConfig": {
-            "host": "db.bengkelonlinxe.id",
+            "host": "db.bengkelonline.id",
             "port": 3306,
             "dbName": "bengkel",
             "user": "bengkel",
@@ -9,7 +9,8 @@
         },
         "etc": {
             "jwtExpires": 36000,
-            "jwtPayload": "BengkelKita2018#"
+            "jwtPayload": "BengkelKita2018#",
+            "log":1
         }
     }
 }
