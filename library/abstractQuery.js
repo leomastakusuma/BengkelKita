@@ -1,6 +1,5 @@
 import mysql from "mysql"
 import config from "config"
-import { error } from "util";
 
 export default class abstractQuery {
 	queryEscape(Query, Params, callback) {
