@@ -17,7 +17,7 @@ export  class Location_models extends abstractQuery {
 		})
 	}
 	getAllLocation (callback){
-		this.sql = "SELECT * from tbl_location where is_delete = ? "
+		this.sql = "SELECT * from tbl_location where is_delete != ? "
 		this.escape = [1]		
 		this.queryEscape(this.sql,this.escape,(resultData)=>{
 			callback(resultData)
